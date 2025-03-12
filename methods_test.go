@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/go-telegram/bot/models"
+	"github.com/Papirus101/bot/models"
 )
 
 type httpClient struct {

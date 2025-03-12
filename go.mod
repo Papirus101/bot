@@ -1,4 +1,4 @@
-module github.com/go-telegram/bot
+module github.com/Papirus101/bot
 
 go 1.21.3
 

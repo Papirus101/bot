@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/go-telegram/bot/models"
+	"github.com/Papirus101/bot/models"
 	"github.com/jftuga/TtlMap"
 	"github.com/redis/go-redis/v9"
 )

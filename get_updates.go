@@ -7,7 +7,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/go-telegram/bot/models"
+	"github.com/Papirus101/bot/models"
 )
 
 const (
