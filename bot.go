@@ -28,7 +28,7 @@ type ErrorsHandler func(err error)
 type DebugHandler func(format string, args ...any)
 type Middleware func(next HandlerFunc) HandlerFunc
 type HandlerFunc func(ctx context.Context, bot *Bot, update *models.Update)
-type MatchFunc func(update *models.Update) bool
+type MatchFunc func(update *models.Update, fsm models.FSM) bool
 
 // Bot represents Telegram Bot main object
 type Bot struct {
@@ -58,6 +58,8 @@ type Bot struct {
 	checkInitTimeout time.Duration
 
 	allowedUpdates AllowedUpdates
+
+	fsm models.FSM
 
 	updates chan *models.Update
 }

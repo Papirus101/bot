@@ -84,7 +84,7 @@ func TestProcessUpdate_WithMatchTypeFunc(t *testing.T) {
 	h2 := func(ctx context.Context, bot *Bot, update *models.Update) {
 		called = "h2"
 	}
-	m := func(update *models.Update) bool {
+	m := func(update *models.Update, fsm models.FSM) bool {
 		return update.CallbackQuery.GameShortName == "game"
 	}
 

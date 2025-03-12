@@ -32,7 +32,7 @@ func main() {
 	b.Start(ctx)
 }
 
-func matchFunc(update *models.Update) bool {
+func matchFunc(update *models.Update, fsm models.FSM) bool {
 	if update.Message == nil {
 		return false
 	}

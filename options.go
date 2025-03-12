@@ -25,25 +25,25 @@ func WithMiddlewares(middlewares ...Middleware) Option {
 
 // WithMessageTextHandler allows to set handler for incoming text messages
 // Also you can use *bot.RegisterHandler function after bot creation
-func WithMessageTextHandler(pattern string, matchType MatchType, handler HandlerFunc) Option {
+func WithMessageTextHandler(pattern string, matchType MatchType, handler HandlerFunc, state string) Option {
 	return func(b *Bot) {
-		b.RegisterHandler(HandlerTypeMessageText, pattern, matchType, handler)
+		b.RegisterHandler(HandlerTypeMessageText, pattern, matchType, handler, state)
 	}
 }
 
 // WithCallbackQueryDataHandler allows to set handler for incoming callback query
 // Also you can use *bot.RegisterHandler function after bot creation
-func WithCallbackQueryDataHandler(pattern string, matchType MatchType, handler HandlerFunc) Option {
+func WithCallbackQueryDataHandler(pattern string, matchType MatchType, handler HandlerFunc, state string) Option {
 	return func(b *Bot) {
-		b.RegisterHandler(HandlerTypeCallbackQueryData, pattern, matchType, handler)
+		b.RegisterHandler(HandlerTypeCallbackQueryData, pattern, matchType, handler, state)
 	}
 }
 
 // WithPhotoCaptionHandler allows to set handler for incoming photos with caption
 // Also you can use *bot.RegisterHandler function after bot creation
-func WithPhotoCaptionHandler(pattern string, matchType MatchType, handler HandlerFunc) Option {
+func WithPhotoCaptionHandler(pattern string, matchType MatchType, handler HandlerFunc, state string) Option {
 	return func(b *Bot) {
-		b.RegisterHandler(HandlerTypePhotoCaption, pattern, matchType, handler)
+		b.RegisterHandler(HandlerTypePhotoCaption, pattern, matchType, handler, state)
 	}
 }
 

@@ -1,7 +1,10 @@
 package bot
 
 import (
+	"context"
+	"fmt"
 	"regexp"
+	"strconv"
 	"strings"
 
 	"github.com/go-telegram/bot/models"
@@ -36,11 +39,12 @@ type handler struct {
 	pattern   string
 	re        *regexp.Regexp
 	matchFunc MatchFunc
+	state     string
 }
 
-func (h handler) match(update *models.Update) bool {
+func (h handler) match(update *models.Update, fsm models.FSM) bool {
 	if h.matchType == matchTypeFunc {
-		return h.matchFunc(update)
+		return h.matchFunc(update, fsm)
 	}
 
 	var data string
@@ -66,6 +70,16 @@ func (h handler) match(update *models.Update) bool {
 			return false
 		}
 		data = update.Message.Caption
+	}
+
+	if strings.TrimSpace(h.state) != "" {
+		value, err := fsm.GetState(context.TODO(), strconv.Itoa(int(update.Message.From.ID)))
+		if err != nil {
+			fmt.Errorf("Error while try to get state for user")
+		}
+		if value != 1 {
+			return false
+		}
 	}
 
 	if h.matchType == MatchTypeExact {
@@ -120,7 +134,7 @@ func (b *Bot) RegisterHandlerRegexp(handlerType HandlerType, re *regexp.Regexp, 
 	return id
 }
 
-func (b *Bot) RegisterHandler(handlerType HandlerType, pattern string, matchType MatchType, f HandlerFunc, m ...Middleware) string {
+func (b *Bot) RegisterHandler(handlerType HandlerType, pattern string, matchType MatchType, f HandlerFunc, state string, m ...Middleware) string {
 	b.handlersMx.Lock()
 	defer b.handlersMx.Unlock()
 
@@ -132,6 +146,7 @@ func (b *Bot) RegisterHandler(handlerType HandlerType, pattern string, matchType
 		matchType:   matchType,
 		pattern:     pattern,
 		handler:     applyMiddlewares(f, m...),
+		state:       state,
 	}
 
 	b.handlers = append(b.handlers, h)
