@@ -16,6 +16,13 @@ func WithCheckInitTimeout(timeout time.Duration) Option {
 	}
 }
 
+// WithFSMState
+func WithFSMState(stateMachine models.FSM) Option {
+	return func(b *Bot) {
+		b.fsm = stateMachine
+	}
+}
+
 // WithMiddlewares allows to set middlewares for each incoming request
 func WithMiddlewares(middlewares ...Middleware) Option {
 	return func(b *Bot) {
